@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Letter Swapper</title>
+    <title>Letter Converter</title>
     <style>
         body {
             font-family: Arial;
@@ -12,67 +12,57 @@
             width: 80%;
             height: 120px;
             margin: 10px;
+            font-size: 16px;
         }
         button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
+            padding: 10px 25px;
+            font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<h2>Custom Letter Replacer 😈</h2>
+<h2>Letter Converter 😈</h2>
 
-<textarea id="inputText" placeholder="Enter text..."></textarea><br>
+<textarea id="text" placeholder="Enter text here..."></textarea><br>
 
-<button onclick="encode()">Encode</button>
-<button onclick="decode()">Decode</button>
-
-<h3>Output:</h3>
-<textarea id="outputText" readonly></textarea>
+<button onclick="convert()">Convert</button>
 
 <script>
-const mapping = {
-    a:'g', b:'i', c:'k', d:'m', e:'o', f:'q',
-    g:'s', h:'u', i:'w', j:'y',
-    l:'n', p:'r', t:'v', x:'z'
+const swapMap = {
+    a:'g', g:'a',
+    b:'i', i:'b',
+    c:'k', k:'c',
+    d:'m', m:'d',
+    e:'o', o:'e',
+    f:'q', q:'f',
+    h:'u', u:'h',
+    j:'y', y:'j',
+    l:'n', n:'l',
+    p:'r', r:'p',
+    t:'v', v:'t',
+    x:'z', z:'x'
 };
 
-const reverseMapping = {};
-for (let key in mapping) {
-    reverseMapping[mapping[key]] = key;
-}
+function convert() {
+    let input = document.getElementById("text").value;
+    let output = "";
 
-function transform(text, map) {
-    let result = "";
-
-    for (let char of text) {
+    for (let char of input) {
         let lower = char.toLowerCase();
 
-        if (map[lower]) {
-            let replaced = map[lower];
-            result += (char === char.toUpperCase())
-                ? replaced.toUpperCase()
-                : replaced;
+        if (swapMap[lower]) {
+            let swapped = swapMap[lower];
+            output += (char === char.toUpperCase())
+                ? swapped.toUpperCase()
+                : swapped;
         } else {
-            result += char;
+            output += char;
         }
     }
 
-    return result;
-}
-
-function encode() {
-    let input = document.getElementById("inputText").value;
-    document.getElementById("outputText").value =
-        transform(input, mapping);
-}
-
-function decode() {
-    let input = document.getElementById("inputText").value;
-    document.getElementById("outputText").value =
-        transform(input, reverseMapping);
+    document.getElementById("text").value = output;
 }
 </script>
 
