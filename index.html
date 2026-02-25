@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Letter Swapper</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 40px;
+        }
+        textarea {
+            width: 80%;
+            height: 120px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Custom Letter Replacer 😈</h2>
+
+<textarea id="inputText" placeholder="Enter text..."></textarea><br>
+
+<button onclick="encode()">Encode</button>
+<button onclick="decode()">Decode</button>
+
+<h3>Output:</h3>
+<textarea id="outputText" readonly></textarea>
+
+<script>
+const mapping = {
+    a:'g', b:'i', c:'k', d:'m', e:'o', f:'q',
+    g:'s', h:'u', i:'w', j:'y',
+    l:'n', p:'r', t:'v', x:'z'
+};
+
+const reverseMapping = {};
+for (let key in mapping) {
+    reverseMapping[mapping[key]] = key;
+}
+
+function transform(text, map) {
+    let result = "";
+
+    for (let char of text) {
+        let lower = char.toLowerCase();
+
+        if (map[lower]) {
+            let replaced = map[lower];
+            result += (char === char.toUpperCase())
+                ? replaced.toUpperCase()
+                : replaced;
+        } else {
+            result += char;
+        }
+    }
+
+    return result;
+}
+
+function encode() {
+    let input = document.getElementById("inputText").value;
+    document.getElementById("outputText").value =
+        transform(input, mapping);
+}
+
+function decode() {
+    let input = document.getElementById("inputText").value;
+    document.getElementById("outputText").value =
+        transform(input, reverseMapping);
+}
+</script>
+
+</body>
+</html>
